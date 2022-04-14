@@ -97,9 +97,7 @@ class CreateUserTest < MiniTest::Test
   end
 
   def with_stubbed_db
-    db = InMemory.new
-    Container.stub(:db, db)
-    yield db
+    yield InMemory.new.tap { |db| Container.stub(:db, db) }
   ensure
     Container.unstub(:db)
   end
